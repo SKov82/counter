@@ -8,7 +8,7 @@ type SettingsPropsType = {
     changeSettings: (minCount: number, maxCount: number) => void
 }
 
-type StateType = {
+export type StateType = {
     minCount: number
     maxCount: number
 }
@@ -18,27 +18,28 @@ type ActionType = {
     value: number
 }
 
-export const Settings: React.FC<SettingsPropsType> = ({settings, changeSettings}) => {
-    function reducer(state: StateType, action: ActionType): StateType {
-        switch (action.type) {
-            case 'minCount':
-                return {
-                    minCount: action.value,
-                    maxCount: (action.value >= state.maxCount)
-                        ? ++action.value
-                        : state.maxCount
-                }
-            case 'maxCount':
-                return {
-                    minCount: state.minCount,
-                    maxCount: (action.value > state.minCount)
-                        ? action.value
-                        : state.maxCount
-                }
-            default:
-                throw new Error('Unknown action type')
-        }
+export function reducer(state: StateType, action: ActionType): StateType {
+    switch (action.type) {
+        case 'minCount':
+            return {
+                minCount: action.value,
+                maxCount: (action.value >= state.maxCount)
+                    ? ++action.value
+                    : state.maxCount
+            }
+        case 'maxCount':
+            return {
+                minCount: state.minCount,
+                maxCount: (action.value > state.minCount)
+                    ? action.value
+                    : state.maxCount
+            }
+        default:
+            throw new Error('Unknown action type')
     }
+}
+
+export const Settings: React.FC<SettingsPropsType> = ({settings, changeSettings}) => {
     const [state, dispatch] = useReducer(reducer, {
         minCount: settings.minCount,
         maxCount: settings.maxCount
