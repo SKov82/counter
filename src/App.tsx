@@ -1,26 +1,34 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, {useState} from 'react';
 import './App.css';
+import {Counter} from './components/Counter';
+import Settings from './components/Settings';
+
+export type SettingsType = {
+    minCount: number
+    maxCount: number
+    visible: boolean
+}
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    const [settings, setSettings] = useState<SettingsType>(
+        {minCount: 0, maxCount: 5, visible: true}
+    )
+    function changeSettings(minCount: number, maxCount: number) {
+        setSettings({minCount: minCount, maxCount: maxCount, visible: !settings.visible})
+    }
+
+    return (
+        <div className="App">
+            {settings.visible
+                ? <Counter settings={settings}
+                           changeSettings={changeSettings}
+                 />
+                : <Settings settings={settings}
+                            changeSettings={changeSettings}
+                 />
+            }
+        </div>
+    );
 }
 
 export default App;

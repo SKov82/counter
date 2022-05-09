@@ -1,0 +1,79 @@
+.counter {
+    width: 290px;
+    margin: 50px auto;
+    border: 2px solid #00C6FF;
+    border-radius: 10px;
+}
+
+.counter div {
+    margin: 20px auto;
+    padding-top: 6px;
+    width: 50%;
+    height: 1.7em;
+    background-color: #00c6ff;
+    border-radius: 10px;
+    text-align: center;
+    font-size: 24px;
+    font-weight: 600;
+}
+
+button {
+    margin: 0 20px 20px 20px;
+}
+
+.red_text {
+    color: red;
+}
+
+.blue_button, .red_button, .green_button {
+    color:#00c6ff;
+    padding: 8px 12px;
+    width:100px;
+    text-decoration:none;
+    text-align:center;
+    background-image: linear-gradient(to left,transparent,transparent 50%,#00c6ff 50%,#00c6ff);
+    background-position: 100% 0;
+    background-size: 200% 100%;
+    transition: all .15s ease-in;
+    font: 400 14px tahoma;
+    border: 1px solid #00C6FF;
+    border-radius: 10px;
+}
+
+.red_button {
+    background-image: linear-gradient(to left,transparent,transparent 50%,red 50%,red);
+    color: red;
+    border: 1px solid red;
+}
+
+.green_button {
+    background-image: linear-gradient(to left,transparent,transparent 50%,limegreen 50%,limegreen);
+    color: limegreen;
+    border: 1px solid limegreen;
+}
+
+.blue_button:disabled,
+.red_button:disabled,
+.green_button:disabled {
+    opacity: .4;
+    color: grey;
+    border: 1px solid gray;
+}
+
+.blue_button:disabled:hover,
+.red_button:disabled:hover,
+.green_button:disabled:hover {
+    background-position: 100% 0;
+    color: inherit;
+    cursor: default;
+}
+
+.blue_button:hover,
+.red_button:hover,
+.green_button:hover {
+    background-position: 0 0;
+    color:#fff;
+    cursor: pointer;
+}
+
+
