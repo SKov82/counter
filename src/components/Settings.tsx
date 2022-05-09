@@ -18,11 +18,7 @@ type ActionType = {
     value: number
 }
 
-type ReducerType = {
-    reducer: (state: StateType, action: ActionType) => StateType
-}
-
-const Settings: React.FC<SettingsPropsType> = ({settings, changeSettings}) => {
+export const Settings: React.FC<SettingsPropsType> = ({settings, changeSettings}) => {
     function reducer(state: StateType, action: ActionType): StateType {
         switch (action.type) {
             case 'minCount':
@@ -83,5 +79,3 @@ const Settings: React.FC<SettingsPropsType> = ({settings, changeSettings}) => {
         </div>
     )
 }
-
-export default Settings;

@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import './App.css';
 import {Counter} from './components/Counter';
-import Settings from './components/Settings';
+import {Settings} from './components/Settings';
 
 export type SettingsType = {
     minCount: number
