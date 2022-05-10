@@ -30,7 +30,7 @@ export function Counter({settings, changeSettings}: CounterPropsType) {
 
     return (
         <div className={css.counter}>
-            <div className={ count >= settings.maxCount ? `${css.red_text}` : '' }>
+            <div className={`${ count >= settings.maxCount ? `${css.red_text}` : '' } ${css.count}`}>
                 {count}
             </div>
 

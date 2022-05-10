@@ -53,23 +53,25 @@ export const Settings: React.FC<SettingsPropsType> = ({settings, changeSettings}
     return (
         <div className={css.counter}>
 
-            <span>Начальное значение</span>
-            <input value={state.minCount}
-                   type="number"
-                   min={0}
-                   onChange={ (e) => {
-                       dispatch( {type: 'minCount', value: +e.currentTarget.value} )
-                   }}
-            />
+            <div className={css.settings}>Начальное значение
+                <input value={state.minCount}
+                       type="number"
+                       min={0}
+                       onChange={ (e) => {
+                           dispatch( {type: 'minCount', value: +e.currentTarget.value} )
+                       }}
+                />
+            </div>
 
-            <span>Максимальное значение</span>
-            <input value={state.maxCount}
-                   type="number"
-                   min={state.minCount + 1}
-                   onChange={ (e) => {
-                       dispatch( {type: 'maxCount', value: +e.currentTarget.value} )
-                   }}
-            />
+            <div className={css.settings}>Максимальное значение
+                <input value={state.maxCount}
+                       type="number"
+                       min={state.minCount + 1}
+                       onChange={ (e) => {
+                           dispatch( {type: 'maxCount', value: +e.currentTarget.value} )
+                       }}
+                />
+            </div>
 
             <Button
                 name={'set'}
