@@ -1,57 +1,88 @@
-import React, {useEffect, useState} from 'react';
+import React, {ChangeEvent} from 'react';
+import {useDispatch, useSelector} from 'react-redux';
+import {
+    ActionType,
+    changeModeAC,
+    increaseCountAC,
+    resetCountAC,
+    selectAll, setMaxCountAC,
+    setMinCountAC
+} from '../redux/counter-reducer';
 import css from './Counter.module.css'
+import {Dispatch} from 'redux';
 import {Button} from './Button';
-import {SettingsType} from '../App';
 
-type CounterPropsType = {
-    settings: SettingsType
-    changeSettings: (minCount: number, maxCount: number) => void
-}
+export const Counter: React.FC = () => {
+    const {
+        count,
+        minCount,
+        maxCount,
+        isCounterMode
+    } = useSelector(selectAll)
 
-export function Counter({settings, changeSettings}: CounterPropsType) {
-    let savedCount = localStorage.getItem('count')
-    let [count, setCount] = useState<number>(
-        savedCount
-            ? JSON.parse(savedCount)
-            : settings.minCount
-    )
+    const dispatch = useDispatch<Dispatch<ActionType>>()
 
-    function changeCount(name: string) {
-        name === 'inc' ? setCount(++count) : setCount(settings.minCount)
-    }
+    const changeCount = () => dispatch(increaseCountAC())
+    const resetCount = () => dispatch(resetCountAC())
+    const changeMode = () => dispatch(changeModeAC())
+    const setMinCount = (e: ChangeEvent<HTMLInputElement>) => dispatch(setMinCountAC(+e.currentTarget.value))
+    const setMaxCount = (e: ChangeEvent<HTMLInputElement>) => dispatch(setMaxCountAC(+e.currentTarget.value))
 
-    function setSettings() {
-        changeSettings(settings.minCount, settings.maxCount)
-    }
+    const counterJSX = <>
+        <div className={`${count >= maxCount ? `${css.red_text}` : ''} ${css.count}`}>
+            {count}
+        </div>
 
-    useEffect(() => {
-        localStorage.setItem('count', count.toString())
-    }, [count])
+        <Button
+            name={'inc'}
+            disabled={count >= maxCount}
+            func={changeCount}
+            style={css.green_button}
+        />
+        <Button
+            name={'reset'}
+            disabled={count <= minCount}
+            func={resetCount}
+            style={css.red_button}
+        />
+        <Button
+            name={'set'}
+            disabled={false}
+            func={changeMode}
+            style={css.blue_button}
+        />
+    </>
+
+    const settingsJSX = <>
+        <div className={css.settings}>Начальное значение
+            <input
+                value={minCount}
+                type="number"
+                min={0}
+                onChange={(e) => setMinCount(e)}
+            />
+        </div>
+
+        <div className={css.settings}>Максимальное значение
+            <input
+                value={maxCount}
+                type="number"
+                min={minCount + 1}
+                onChange={(e) => setMaxCount(e)}
+            />
+        </div>
+
+        <Button
+            name={'set'}
+            disabled={false}
+            func={changeMode}
+            style={css.blue_button}
+        />
+    </>
 
     return (
         <div className={css.counter}>
-            <div className={`${ count >= settings.maxCount ? `${css.red_text}` : '' } ${css.count}`}>
-                {count}
-            </div>
-
-            <Button
-                name={'inc'}
-                disabled={count >= settings.maxCount}
-                func={changeCount}
-                style={css.green_button}
-            />
-            <Button
-                name={'reset'}
-                disabled={count <= settings.minCount}
-                func={changeCount}
-                style={css.red_button}
-            />
-            <Button
-                name={'set'}
-                disabled={false}
-                func={setSettings}
-                style={css.blue_button}
-            />
+            {isCounterMode ? counterJSX : settingsJSX}
         </div>
     )
-}
+};
